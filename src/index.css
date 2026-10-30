@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    color-scheme: light;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Blur transition effect when switching between light and dark themes */
+@keyframes themeBlurTransition {
+  0% {
+    filter: blur(0px);
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    filter: blur(8px) saturate(1.2);
+    opacity: 0.88;
+    transform: scale(0.998);
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.theme-blur-active {
+  animation: themeBlurTransition 0.42s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: filter, opacity, transform;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #sena-certificate-print, #sena-certificate-print * {
+    visibility: visible;
+  }
+  #sena-certificate-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: white !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
